@@ -96,6 +96,9 @@ module.exports = [
         toZigbee: [tz.tuya_switch_state],
         configure: async (device, coordinatorEndpoint, logger) => {
             await reporting.bind(device.getEndpoint(1), coordinatorEndpoint, ['genOnOff']);
+            // Reports itself as battery which is not correct: https://github.com/Koenkk/zigbee2mqtt/issues/6190
+            device.powerSource = 'Mains (single phase)';
+            device.save();
         },
     },
     {
